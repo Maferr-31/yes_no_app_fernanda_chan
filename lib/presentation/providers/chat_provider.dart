@@ -4,9 +4,9 @@ import 'package:yes_no_app_fernanda_chan/domain/entities/message.dart';
 //puntos para luis,ader,pablo
 
 class ChatProvider extends ChangeNotifier {
-  List<Message> message = [
-    Message(Text: "hola ader", fromWho: FromWho.me),
-    Message(Text: "lloras?", fromWho: FromWho.me)
+  List<Message> messageList = [
+    Message(text: "hola ader", fromWho: FromWho.me),
+    Message(text: "lloras?", fromWho: FromWho.me)
   ];
   //controlador
   final ScrollController chatScrollController = ScrollController();
