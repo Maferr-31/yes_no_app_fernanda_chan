@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:yes_no_app_fernanda_chan/domain/entities/message.dart';
+import 'package:yes_no_app_fernanda_chan/main.dart';
+import 'package:yes_no_app_fernanda_chan/presentation/providers/chat_provider.dart';
 import 'package:yes_no_app_fernanda_chan/presentation/widgets/chat/him_message_bubble.dart';
 import 'package:yes_no_app_fernanda_chan/presentation/widgets/chat/my_message_bubble.dart';
 import 'package:yes_no_app_fernanda_chan/presentation/widgets/chat/screens/message_field_box.dart';
@@ -13,7 +17,7 @@ class ChatScreen extends StatelessWidget {
         leading: const Padding(
           padding: EdgeInsets.all(4.0),
           child: CircleAvatar(
-            backgroundImage: NetworkImage('https://i.pinimg.com/originals/d1/55/04/d1550433fc3e567643b8393b542f3c27.png'),
+            backgroundImage: NetworkImage('https://www.famousbirthdays.com/headshots/henry-cavill-5.jpg'),
            ),
           ),
         title: const Text('Mi amor'),
@@ -28,6 +32,8 @@ class _ChatView extends StatelessWidget {
  
   @override
   Widget build(BuildContext context) {
+
+    final chatProvider = context.watch<ChatProvider>();
     return SafeArea(
      child: Padding(
       padding: const EdgeInsets.symmetric( horizontal: 10 ),
@@ -36,15 +42,20 @@ class _ChatView extends StatelessWidget {
 
         Expanded(
           child: ListView.builder(
-            itemCount: 100,
+            itemCount: chatProvider.messageList.length,
             itemBuilder: (context, index){
-            return ( index % 2 == 0 )
+              //instancia de message que sabra de quien es el mesaje
+              final message = chatProvider.messageList[index];
+            return ( message.fromWho == FromWho.him)
               ? const HimMessageBubble()
-              : const MyMessageBubble();
+              : MyMessageBubble(
+                message: message,);
             })),
 
           ///caja de texto
-        const MessageFieldBox(),
+        MessageFieldBox(
+          //una vez que tenga el valor cambiado, envialo
+          onValue: chatProvider.sendMessage),
       ],
       )
     ),

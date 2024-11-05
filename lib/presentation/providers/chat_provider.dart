@@ -12,9 +12,15 @@ class ChatProvider extends ChangeNotifier {
   final ScrollController chatScrollController = ScrollController();
 
   Future<void> sendMessage(String text) async {
+    //no enviar mensaje vacio
+    if (text.trim().isEmpty) return;
     //el mesaje siempre va a ser "me" porque yo lo envio 
     final newMessage = Message(text: text, fromWho: FromWho.me);
+
     messageList.add(newMessage);
+
+    //cantidad de mensajes
+    print('cantidad de mensajes: ${messageList.length}');
 
     notifyListeners();
 
@@ -24,6 +30,7 @@ class ChatProvider extends ChangeNotifier {
     //mover el scroll al ultimo mensaje
 
     Future<void> moveScrollToBotto() async{
+      if (chatScrollController.hasClients) {
     //un pequeño atraso en la aplicacion 
      await Future.delayed(const Duration(seconds: 1));
      chatScrollController.animateTo(
@@ -35,6 +42,6 @@ class ChatProvider extends ChangeNotifier {
       //"rebote" al final de la aimation
       curve: Curves.easeOut);
 
-    
+      }
   }
 }
