@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yes_no_app_fernanda_chan/config/helpers/get_yes_no_answer.dart';
 import 'package:yes_no_app_fernanda_chan/domain/entities/message.dart';
 
 //puntos para luis,ader,pablo
@@ -11,6 +12,9 @@ class ChatProvider extends ChangeNotifier {
   //controlador
   final ScrollController chatScrollController = ScrollController();
 
+  //Instancia de la clase getyesnoanswere
+  final getYesNoAnswer = GetYesNoAnswer();
+
   Future<void> sendMessage(String text) async {
     //no enviar mensaje vacio
     if (text.trim().isEmpty) return;
@@ -18,6 +22,11 @@ class ChatProvider extends ChangeNotifier {
     final newMessage = Message(text: text, fromWho: FromWho.me);
 
     messageList.add(newMessage);
+
+    //agregar una condicion 
+    if(text.endsWith('?')) {
+      himReply();
+    }
 
     //cantidad de mensajes
     print('cantidad de mensajes: ${messageList.length}');
@@ -44,4 +53,14 @@ class ChatProvider extends ChangeNotifier {
 
       }
   }
+   Future<void> himReply() async {
+    //obtener el mensaje de la peticion 
+    final himMessage = await getYesNoAnswer.getAnswer();
+    //añadir el mensaje de mi crush a la lista
+    messageList.add(himMessage);
+    //notifica si algo de provider
+    notifyListeners();
+  //mueve el scroll hasta el ultimo mensaje 
+    moveScrollToBotto();
+   }
 }
