@@ -17,7 +17,7 @@ class ChatScreen extends StatelessWidget {
         leading: const Padding(
           padding: EdgeInsets.all(4.0),
           child: CircleAvatar(
-            backgroundImage: NetworkImage('https://www.famousbirthdays.com/headshots/henry-cavill-5.jpg'),
+            backgroundImage: NetworkImage("https://www.famousbirthdays.com/headshots/henry-cavill-5.jpg"),
            ),
           ),
         title: const Text('Mi amor'),
@@ -47,7 +47,8 @@ class _ChatView extends StatelessWidget {
               //instancia de message que sabra de quien es el mesaje
               final message = chatProvider.messageList[index];
             return ( message.fromWho == FromWho.him)
-              ? const HimMessageBubble()
+              ? HimMessageBubble(
+                message: message,)
               : MyMessageBubble(
                 message: message,);
             })),
