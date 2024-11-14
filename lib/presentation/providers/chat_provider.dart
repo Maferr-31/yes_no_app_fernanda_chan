@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:yes_no_app_fernanda_chan/config/helpers/get_yes_no_answer.dart';
 import 'package:yes_no_app_fernanda_chan/domain/entities/message.dart';
 
-//puntos para luis,ader,pablo
+
 
 class ChatProvider extends ChangeNotifier {
   List<Message> messageList = [
-    Message(text: "hola ader", fromWho: FromWho.me),
-    Message(text: "lloras?", fromWho: FromWho.me)
+    Message(text: "hola", fromWho: FromWho.me),
+    Message(text: "¿Todo bien?", fromWho: FromWho.me)
   ];
   //controlador
   final ScrollController chatScrollController = ScrollController();
@@ -16,6 +16,8 @@ class ChatProvider extends ChangeNotifier {
   final getYesNoAnswer = GetYesNoAnswer();
 
   Future<void> sendMessage(String text) async {
+     //cantidad de mensajes
+    print('flutter: cantidad de mensajes: ${messageList.length}'); 
     //no enviar mensaje vacio
     if (text.trim().isEmpty) return;
     //el mesaje siempre va a ser "me" porque yo lo envio 
@@ -28,17 +30,16 @@ class ChatProvider extends ChangeNotifier {
       himReply();
     }
 
-    //cantidad de mensajes
-    print('cantidad de mensajes: ${messageList.length}');
+    
 
     notifyListeners();
 
-    moveScrollToBotto();
+    moveScrollToBottom();
   }
 
     //mover el scroll al ultimo mensaje
 
-    Future<void> moveScrollToBotto() async{
+    Future<void> moveScrollToBottom() async{
       if (chatScrollController.hasClients) {
     //un pequeño atraso en la aplicacion 
      await Future.delayed(const Duration(seconds: 1));
@@ -61,6 +62,6 @@ class ChatProvider extends ChangeNotifier {
     //notifica si algo de provider
     notifyListeners();
   //mueve el scroll hasta el ultimo mensaje 
-    moveScrollToBotto();
+    moveScrollToBottom();
    }
 }

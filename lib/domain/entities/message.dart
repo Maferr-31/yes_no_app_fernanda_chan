@@ -1,4 +1,4 @@
-
+//identidad atómica: lo más pequeña de un sistema
 enum FromWho{me, him}
 
 class Message {
@@ -6,6 +6,4 @@ class Message {
  final String? imageUrl;
  final FromWho fromWho;
 
-  Message({required this.text, this.imageUrl, required this.fromWho});
- 
-}
+Message({required this.text, this.imageUrl, required this.fromWho});}
